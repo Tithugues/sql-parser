@@ -365,13 +365,17 @@ class Parser
     public int $brackets = 0;
 
     /**
-     * @param string|UtfString|TokensList|null $list   the list of tokens to be parsed
-     * @param bool                             $strict whether strict mode should be enabled or not
+     * @param string|UtfString|TokensList|null $list    the list of tokens to be parsed
+     * @param bool                             $strict  whether strict mode should be enabled or not
+     * @param string                           $context the SQL context to load in order to parse the queries
      */
-    public function __construct(string|UtfString|TokensList|null $list = null, bool $strict = false)
-    {
+    public function __construct(
+        string|UtfString|TokensList|null $list = null,
+        bool $strict = false,
+        string $context = '',
+    ) {
         if (Context::$keywords === []) {
-            Context::load();
+            Context::load($context);
         }
 
         if (is_string($list) || ($list instanceof UtfString)) {
